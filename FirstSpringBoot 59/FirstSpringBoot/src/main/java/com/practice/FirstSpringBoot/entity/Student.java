@@ -19,11 +19,11 @@ public class Student {
 
     @Column(nullable = false, name = "studentName", length = 40)
     private String name;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
     @Column(nullable = false)
     private Date dob;
-    @Column(nullable = false, unique = true)
+     @Column(nullable = false)
     private String cell;
     @Column(nullable = false)
     private String gender;
