@@ -24,5 +24,7 @@ public Student findById(int id){
     return studentRepository.findById(id).get();
 }
 
-
+public void updateStu(Student s,int id){
+studentRepository.save(s);
+}
 }
