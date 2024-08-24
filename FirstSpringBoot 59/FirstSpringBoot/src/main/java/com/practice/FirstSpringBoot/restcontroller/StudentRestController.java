@@ -22,7 +22,7 @@ public class StudentRestController {
     @PostMapping("/save")
     public void saveStudent(@RequestBody  Student s) {
     studentService.saveStu(s);
-    }
+    } 
     @RequestMapping("/delete/{id}")
     public void deleteStudent(@PathVariable int id) {
         studentService.deleteById(id);
