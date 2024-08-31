@@ -1,0 +1,5 @@
+mysql driverclass:"com.mysql.cj.jdbc.Driver"
+mysql databaseUrl:"jdbc:mysql://localhost:3306/"
+XMAP port:3307
+username:"root"
+password:"@)@)"
