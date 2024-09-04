@@ -1,22 +1,24 @@
 package com.nirob.springBoot.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
 @Entity
 @Data
 @Table(name = "students")
-
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class Student {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (nullable = false)
     private int id;
-    @Column (nullable = false,length = 50,name = "stuName")
+    @Column (nullable = false,length = 50)
     private String name;
     @Column (nullable = false)
     private int age;

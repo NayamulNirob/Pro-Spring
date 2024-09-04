@@ -1,10 +1,10 @@
 package com.nirob.springBoot.repository;
 
-import com.nirob.springBoot.entity.Student;
+import com.nirob.springBoot.entity.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Integer> {
+public interface DepartmentRepository extends JpaRepository<Department, Integer> {
 
 }
