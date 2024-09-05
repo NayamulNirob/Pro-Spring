@@ -5,21 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
-@Table(name = "departments")
 @Data
-@AllArgsConstructor
+@Table(name = "facultys")
 @NoArgsConstructor
-public class Department {
+@AllArgsConstructor
+public class Faculty {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true, length = 40)
     private int id;
-    @Column(length = 50, nullable = false)
+    @Column(nullable = false, length = 50, unique = true)
     private String name;
+    @Column(nullable = false)
+    private int totalSeat;
 
-    @JoinColumn(name = "facId")
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Faculty faculty;
+
 }

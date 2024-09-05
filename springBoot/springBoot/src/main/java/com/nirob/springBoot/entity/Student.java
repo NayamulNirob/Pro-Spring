@@ -27,4 +27,7 @@ public class Student {
     @Column (nullable = false)
     private Date birthday;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "depId")
+    private Department department;
 }
