@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FacultyService } from '../../services/faculty.service';
+import { FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-save',
@@ -10,7 +12,10 @@ export class SaveComponent implements OnInit{
 
 
 constructor( 
-  private facultyService:FacultyService
+  private facultyService:FacultyService,
+  private formbuilder:FormBuilder
+
+
 ){}
 
   ngOnInit(): void {

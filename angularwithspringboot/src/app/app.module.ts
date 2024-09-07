@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ViewComponent } from './faculty/view/view.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { SaveComponent } from './faculty/save/save.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,10 @@ import { SaveComponent } from './faculty/save/save.component';
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule
+
+
   ],
   providers: [
     provideClientHydration(),
