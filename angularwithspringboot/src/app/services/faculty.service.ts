@@ -10,8 +10,6 @@ export class FacultyService {
 
   baseUrl:string="http://localhost:8089/api/faculty/";
 
-   
-
   constructor(private http:HttpClient) { }
 
   loadAllfaculties():Observable<any>{
