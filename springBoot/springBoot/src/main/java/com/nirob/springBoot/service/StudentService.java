@@ -1,9 +1,14 @@
 package com.nirob.springBoot.service;
 
+import com.nirob.springBoot.entity.Department;
 import com.nirob.springBoot.entity.Student;
+import com.nirob.springBoot.repository.DepartmentRepository;
+import com.nirob.springBoot.repository.FacultyRepository;
 import com.nirob.springBoot.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -12,8 +17,22 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
+
 
     public void saveStu(Student s) {
+
+       Department department= departmentRepository.findById(s.getDepartment().getId()).orElseThrow(
+               () -> new RuntimeException("Department not found")
+       );
+       s.setDepartment(department);
+
+//       s.setDepartment(departmentRepository.findById(s.getDepartment().getId()).orElseThrow(
+//               () -> new IllegalArgumentException("Department not found")
+//       ));
+
         studentRepository.save(s);
     }
 
@@ -31,7 +50,7 @@ public class StudentService {
         );
     }
 
-    public void updateStu(Student s, int id) {
+    public void updateStu( Student s,int id) {
         studentRepository.save(s);
     }
 }

@@ -20,6 +20,6 @@ public class Department {
     private String name;
 
     @JoinColumn(name = "facId")
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     private Faculty faculty;
 }

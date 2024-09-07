@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
-import java.sql.Date;
 
 @Entity
 @Data
@@ -25,9 +25,9 @@ public class Student {
     @Column (nullable = false)
     private String gender;
     @Column (nullable = false)
-    private Date birthday;
+    private LocalDate birthday;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "depId")
     private Department department;
 }
