@@ -39,14 +39,32 @@ export class SaveComponent implements OnInit {
     this.faculty.totalSeat=this.fromGroup.value.totalSeat;
     this.facultyService.saveFaculty(this.faculty).subscribe({
       next:res=>{
-        this.facultiesData=res;
-        this.router.navigate(['/view']);
+        console.log(res);
+        this.fromGroup.reset();
+        this.router.navigate(['/facview']);
       },
       error:err=>{
         console.log("Faculty Not created",err);
       }
     });
     }
+
+    // createFaculty() {
+    //   this.faculty.name = this.formValue.value.name;
+    //   this.faculty.totalSeat = this.formValue.value.totalSeat;  // Add this line
+    
+    //   this.facultyService.createFaculty(this.faculty)
+    //     .subscribe({
+    //       next: res => {
+    //         console.log(res);
+    //         this.formValue.reset();
+    //         this.router.navigate(['/viewFaculty']);
+    //       },
+    //       error: error => {
+    //         console.log(error);
+    //       }
+    //     });
+    // }
 
   }
 

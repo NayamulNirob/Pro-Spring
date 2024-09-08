@@ -11,7 +11,7 @@
         <tr *ngFor="let f of department |async">
             <td>{{f.id}}</td>
             <td>{{f.name}}</td>
-            <td>{{f}}</td>
+            <td>{{f.faculty.name}}</td>
             <td></td>
         </tr>
 
