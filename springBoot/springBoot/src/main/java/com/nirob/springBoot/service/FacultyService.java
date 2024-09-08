@@ -15,8 +15,7 @@ public class FacultyService {
 
     public Faculty saveFaculty(Faculty f) {
         try {
-            Faculty savedFaculty = facultyRepository.save(f);
-            return savedFaculty;
+            return facultyRepository.save(f);
         } catch (Exception e) {
             return null;
         }
