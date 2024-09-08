@@ -1,1 +1,18 @@
-<p>save works!</p>
+<div class="container mt-5">
+    <form [formGroup]="fromGroup">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Faculty Name</label>
+          <input type="text" class="form-control" id="exampleInputEmail1"  formControlName="name">
+    
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Total Seat</label>
+          <input type="number" class="form-control" id="exampleInputPassword1" formControlName="totalSeat">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="createFaulty()">Submit</button>
+      </form>
+</div>

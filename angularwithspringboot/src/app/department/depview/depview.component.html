@@ -1,0 +1,19 @@
+<div class="container mt-5 table table-striped-columns" >
+    
+    <table class="table table-primary table-striped">
+
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Faculty</th>
+            <th>Action</th>
+        </tr>
+        <tr *ngFor="let f of department |async">
+            <td>{{f.id}}</td>
+            <td>{{f.name}}</td>
+            <td>{{f}}</td>
+            <td></td>
+        </tr>
+
+    </table>
+</div>

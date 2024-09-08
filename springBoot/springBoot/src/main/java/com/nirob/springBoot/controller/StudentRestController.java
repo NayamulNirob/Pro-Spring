@@ -1,6 +1,5 @@
 package com.nirob.springBoot.controller;
 
-import com.nirob.springBoot.entity.Department;
 import com.nirob.springBoot.entity.Student;
 import com.nirob.springBoot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;

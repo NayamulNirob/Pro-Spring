@@ -1,24 +1,17 @@
 package com.nirob.springBoot.service;
 
 import com.nirob.springBoot.entity.Faculty;
-import com.nirob.springBoot.repository.DepartmentRepository;
 import com.nirob.springBoot.repository.FacultyRepository;
-import com.nirob.springBoot.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.*;
+import java.util.List;
 
 
 @Service
 public class FacultyService {
     @Autowired
     private FacultyRepository facultyRepository;
-
-
-
 
     public void saveFaculty(Faculty f) {
 
