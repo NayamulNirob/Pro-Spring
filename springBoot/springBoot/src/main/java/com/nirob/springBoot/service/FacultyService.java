@@ -13,9 +13,13 @@ public class FacultyService {
     @Autowired
     private FacultyRepository facultyRepository;
 
-    public void saveFaculty(Faculty f) {
-
-        facultyRepository.save(f);
+    public Faculty saveFaculty(Faculty f) {
+        try {
+            Faculty savedFaculty = facultyRepository.save(f);
+            return savedFaculty;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public List<Faculty> getAllFaculty() {

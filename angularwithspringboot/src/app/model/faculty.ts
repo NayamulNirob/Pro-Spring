@@ -1,5 +1,5 @@
 export class FacaltyModel{
     id!:number;
-    name!:String;
+    name!:string;
     totalSeat!:number;
 }

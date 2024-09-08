@@ -9,7 +9,7 @@ import { FacultyService } from '../../services/faculty.service';
 })
 export class DepviewComponent implements OnInit{
   faculty: any;
-  department: any;
+  departments: any;
 
   constructor(
     private departmentService: DepartmentService,
@@ -17,12 +17,12 @@ export class DepviewComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    this.loadDepartment
+    this.loadDepartment();
   }
 
   loadDepartment() {
 
-     this.department=this.departmentService.loadAllDepartments();
+     this.departments=this.departmentService.loadAllDepartments();
   
   }
 }

@@ -25,9 +25,9 @@ public class FacultyRestController {
         return new ResponseEntity<>(faculties, HttpStatus.OK);
     }
     @PostMapping("save")
-    public ResponseEntity<String> saveFaculty(@RequestBody Faculty faculty) {
-      facultyService.saveFaculty(faculty);
-      return new ResponseEntity<>("Faculty saved", HttpStatus.OK);
+    public ResponseEntity<Faculty> saveFaculty(@RequestBody Faculty faculty) {
+      Faculty savedFaculty = facultyService.saveFaculty(faculty);
+      return new ResponseEntity<>(savedFaculty, HttpStatus.OK);
     }
     @PutMapping("update/{id}")
     public ResponseEntity<String> updateFaculty(@RequestBody Faculty f, @PathVariable("id") int id) {

@@ -3,6 +3,7 @@ import { FacultyService } from '../../services/faculty.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FacaltyModel } from '../../model/faculty';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 export class SaveComponent implements OnInit {
 
   faculty: FacaltyModel = new FacaltyModel();
-  fromGroup!: FormGroup;
+  formGroup!: FormGroup;
   facultiesData: any;
 
 
@@ -21,51 +22,88 @@ export class SaveComponent implements OnInit {
   constructor(
     private facultyService: FacultyService,
     private formbuilder: FormBuilder,
-    private router:Router
+    private router: Router
 
   ) { }
 
   ngOnInit(): void {
 
-    this.fromGroup = this.formbuilder.group({
+    this.formGroup = this.formbuilder.group({
 
       name: [''],
-      totalSeat: ['']
+      totalSeat: [0]
     });
   }
 
-  createFaulty(){
-    this.faculty.name=this.fromGroup.value.name;
-    this.faculty.totalSeat=this.fromGroup.value.totalSeat;
+  createFaulty() {
+    this.faculty.name = this.formGroup.value.name;
+    this.faculty.totalSeat = this.formGroup.value.totalSeat;
     this.facultyService.saveFaculty(this.faculty).subscribe({
-      next:res=>{
+      next: res => {
         console.log(res);
-        this.fromGroup.reset();
+        this.formGroup.reset();
         this.router.navigate(['/facview']);
       },
-      error:err=>{
-        console.log("Faculty Not created",err);
+      error: err => {
+        console.log(err);
       }
     });
-    }
-
-    // createFaculty() {
-    //   this.faculty.name = this.formValue.value.name;
-    //   this.faculty.totalSeat = this.formValue.value.totalSeat;  // Add this line
-    
-    //   this.facultyService.createFaculty(this.faculty)
-    //     .subscribe({
-    //       next: res => {
-    //         console.log(res);
-    //         this.formValue.reset();
-    //         this.router.navigate(['/viewFaculty']);
-    //       },
-    //       error: error => {
-    //         console.log(error);
-    //       }
-    //     });
-    // }
-
   }
+
+  // createFaculty() {
+  //   this.faculty.name = this.formValue.value.name;
+  //   this.faculty.totalSeat = this.formValue.value.totalSeat;  // Add this line
+
+  //   this.facultyService.createFaculty(this.faculty)
+  //     .subscribe({
+  //       next: res => {
+  //         console.log(res);
+  //         this.formValue.reset();
+  //         this.router.navigate(['/viewFaculty']);
+  //       },
+  //       error: error => {
+  //         console.log(error);
+  //       }
+  //     });
+  // }
+
+  // faculty: FacaltyModel = new FacaltyModel();
+  // formValue!: FormGroup;
+  // facultyData: any;
+
+  // constructor(
+  //   private facultyService: FacultyService,
+  //   private router: Router,
+  //   private httpClient: HttpClient,
+  //   private formBuilder: FormBuilder
+  // ) {}
+
+  // ngOnInit(): void {
+  //   this.formValue = this.formBuilder.group({
+  //     name: [''],
+  //     totalSeat: [''],
+  //   });
+  // }
+
+  // createFaculty() {
+  //   this.faculty.name = this.formValue.value.name;
+  //   this.faculty.totalSeat = this.formValue.value.totalSeat;  // Add this line
+
+  //   this.facultyService.saveFaculty(this.faculty)
+  //     .subscribe({
+  //       next: res => {
+  //         console.log(res);
+  //         this.formValue.reset();
+  //         this.router.navigate(['/facview']);
+  //       },
+  //       error: error => {
+  //         console.log(error);
+  //       }
+  //     });
+  // }
+
+
+
+}
 
 

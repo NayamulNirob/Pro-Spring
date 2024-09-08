@@ -20,4 +20,11 @@ export class FacultyService {
   saveFaculty(faculty:FacaltyModel):Observable<FacaltyModel>{
     return this.http.post<FacaltyModel>(this.baseUrl+"save",faculty);
   }
+
+  // saveFaculty(faculty:FacaltyModel):Observable<FacaltyModel>{
+
+  //   return this.http.post<FacaltyModel>(this.baseUrl+"save",faculty);
+  //  }
+
+
 }
