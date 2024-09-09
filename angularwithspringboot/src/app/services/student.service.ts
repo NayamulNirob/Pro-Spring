@@ -13,8 +13,8 @@ export class StudentService {
   constructor(private http:HttpClient) { }
 
 
-  loadAllstudent():Observable<any>{
-    return this.http.get<any>(this.baseUrl+"view")
+  loadAllstudent():Observable<StudentModel>{
+    return this.http.get<StudentModel>(this.baseUrl+"view")
 
   }
 
