@@ -1,19 +1,38 @@
-<div class="container mt-5 table table-striped-columns" >
-    
+<div class="container mt-5 table table-striped-columns">
+
     <table class="table table-primary table-striped">
 
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Faculty</th>
+            <th>Faculty Name</th>
+            <th>Faculty Total Seat</th>
             <th>Action</th>
         </tr>
-        <tr *ngFor="let f of departments |async">
-            <td>{{f.id}}</td>
-            <td>{{f.name}}</td>
-            <td>{{f.faculty.name}}</td>
-            <td></td>
+        <tr *ngFor="let d of departments">
+            <td>{{d.id}}</td>
+            <td>{{d.name}}</td>
+            <td>{{d.faculty.name}}</td>
+            <td>{{d.faculty.totalSeat}}</td>
+            <td><button class="btn btn-success btn-sm">Edit</button>&nbsp;
+                <button class="btn btn-danger btn-sm">Delete</button>
+            </td>
         </tr>
 
     </table>
+
+<div class="row">
+
+    <div class="card md-4 m-1" style="width: 18rem;" *ngFor="let d of departments">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{d.name}}</h5>
+            <p class="card-text">{{d.faculty.name}}<br>
+                {{d.faculty.totalSeat}}</p>
+            <a href="#" class="btn btn-primary"><button class="btn btn-success btn-sm">Edit</button>&nbsp;
+                <button class="btn btn-danger btn-sm">Delete</button></a>
+        </div>
+    </div>
+</div>
+
 </div>

@@ -1,6 +1,7 @@
 package com.nirob.springBoot.controller;
 
 import com.nirob.springBoot.entity.Department;
+import com.nirob.springBoot.entity.Faculty;
 import com.nirob.springBoot.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +25,11 @@ public class DepartmentRestController {
     }
 
     @PostMapping("save")
-    public ResponseEntity<String> saveDepartment( @RequestBody Department d) {
+    public ResponseEntity<Department> saveDepartment( @RequestBody Department d) {
         departmentService.saveDepartment(d);
-        return new ResponseEntity<>("saved", HttpStatus.OK);
+        return new ResponseEntity<>(d, HttpStatus.OK);
     }
+
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteDepartment(@PathVariable("id") int id) {
      departmentService.deleteDepartmentById(id);

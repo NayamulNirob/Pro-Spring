@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { DepartmentModel } from '../model/departmodel';
 
 @Injectable({
@@ -19,5 +19,9 @@ export class DepartmentService {
 
   saveDepartment(department:DepartmentModel):Observable<DepartmentModel>{
     return this.http.post<DepartmentModel>(this.baseUrl+"save",department);
+  }
+  private handleerror(error:any){
+    console.log('An error occured',error);
+    return throwError(()=>new Error('test'));
   }
 }

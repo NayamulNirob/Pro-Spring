@@ -22,12 +22,13 @@ public class DepartmentService {
 
 
 
-    public void saveDepartment(Department d) {
+    public Department saveDepartment(Department d) {
         Faculty faculty=facultyRepository.findById(d.getFaculty().getId()).orElseThrow(
                 () -> new RuntimeException("Faculty not found")
         );
         d.setFaculty(faculty);
         departmentRepository.save(d);
+        return d;
     }
 
     public List<Department> getAllDepartments() {

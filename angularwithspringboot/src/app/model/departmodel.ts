@@ -5,7 +5,7 @@ export class DepartmentModel {
     
     faculty!: {
         id: number;
-        name: String;
+        name: string;
         totalSeat: number;
     }
 }
