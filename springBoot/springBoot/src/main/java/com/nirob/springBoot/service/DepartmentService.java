@@ -14,12 +14,14 @@ import java.util.List;
 
 @Service
 public class DepartmentService {
-    @Autowired
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
-    @Autowired
-    private FacultyRepository facultyRepository;
+    private final FacultyRepository facultyRepository;
 
+    public DepartmentService(DepartmentRepository departmentRepository, FacultyRepository facultyRepository) {
+        this.departmentRepository = departmentRepository;
+        this.facultyRepository = facultyRepository;
+    }
 
 
     public Department saveDepartment(Department d) {

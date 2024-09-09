@@ -1,0 +1,50 @@
+<div class="container mt-5 table table-striped-columns">
+
+    <table class="table table-primary table-striped">
+
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Birthday</th>
+            <th>Department Name</th>
+            <th>Faculty Name</th>
+            <th>Action</th>
+        </tr>
+        <tr *ngFor="let d of students">
+            <td>{{d.id}}</td>
+            <td>{{d.name}}</td>
+            <td>{{d.age}}</td>
+            <td>{{d.gender}}</td>
+            <td>{{d.birthday}}</td>
+            <td>{{d.department.name}}</td>
+            <td>{{d.department.faculty.name}}<br>Seat={{d.department.faculty.totalSeat}}</td>
+
+            <td><button class="btn btn-success btn-sm">Edit</button>&nbsp;
+                <button class="btn btn-danger btn-sm">Delete</button>
+            </td>
+        </tr>
+
+    </table>
+
+    <div class="row">
+
+        <div class="card md-4 m-1" style="width: 18rem;" *ngFor="let s of students">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Name : {{s.name}}</h5>
+                <p class="card-text">Age : {{s.age}}<br>
+                    Gender : {{s.gender}}<br>
+                    Birthday : {{s.birthday}}<br>
+                    Department : {{s.department.name}}<br>
+                    Faculty : {{s.department.faculty.name}}<br>
+                    Total Seat : {{s.department.faculty.totalSeat}}
+                  </p>
+                <a href="#" class="btn btn-primary"><button class="btn btn-success btn-sm">Edit</button>&nbsp;
+                    <button class="btn btn-danger btn-sm">Delete</button></a>
+            </div>
+        </div>
+    </div>
+
+</div>

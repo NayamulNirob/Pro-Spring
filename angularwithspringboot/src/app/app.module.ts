@@ -9,6 +9,8 @@ import { SaveComponent } from './faculty/save/save.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DepviewComponent } from './department/depview/depview.component';
 import { DepsaveComponent } from './department/depsave/depsave.component';
+import { StudentcreateComponent } from './student/studentcreate/studentcreate.component';
+import { StudentviewComponent } from './student/studentview/studentview.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { DepsaveComponent } from './department/depsave/depsave.component';
     ViewComponent,
     SaveComponent,
     DepviewComponent,
-    DepsaveComponent
+    DepsaveComponent,
+    StudentcreateComponent,
+    StudentviewComponent
   ],
   imports: [
     BrowserModule,
