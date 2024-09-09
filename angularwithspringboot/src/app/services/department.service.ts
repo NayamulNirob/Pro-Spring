@@ -18,10 +18,9 @@ export class DepartmentService {
   }
 
   saveDepartment(department:DepartmentModel):Observable<DepartmentModel>{
+    console.log(department)
     return this.http.post<DepartmentModel>(this.baseUrl+"save",department);
   }
-  private handleerror(error:any){
-    console.log('An error occured',error);
-    return throwError(()=>new Error('test'));
-  }
+
+
 }

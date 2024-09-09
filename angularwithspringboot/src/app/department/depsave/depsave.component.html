@@ -1,18 +1,18 @@
 <div class="container mt-5">
-    <form [formGroup]="formGroup">
-        <div class="mb-3">
-          <label class="form-label">Department Name</label>
-          <input type="text" class="form-control"  formControlName="name">
-    
-        </div>
-        <div class="mb-3">
-          <label for="generic" class="form-label">Faculty Name</label>
-          <select id="generic" formControlName="faculty" class="from-select" required>
-            <option *ngFor="let f of faculty"[ngValue]="f.id">{{f.name}}</option>
-          </select>
-          <div class="invalid-feedback">Please select a Faculty</div>
-        </div>
+  <form>
+    <div class="mb-3">
+      <label class="form-label">Department Name</label>
+      <input type="text" class="form-control" [(ngModel)]="department.name" name="name">
 
-        <button type="submit" class="btn btn-primary" (click)="createDepartment()">Submit</button>
-      </form>
+    </div>
+    <div class="mb-3">
+      <label for="generic" class="form-label">Faculty Name</label>
+      <select id="generic" name="faculty" class="from-select" required [(ngModel)]="department.faculty.id">
+        <option *ngFor="let f of faculties" [value]="f.id">{{f.name}}</option>
+      </select>
+      <div class="invalid-feedback">Please select a Faculty</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="createDepartment()">Submit</button>
+  </form>
 </div>

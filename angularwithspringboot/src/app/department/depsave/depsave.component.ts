@@ -13,33 +13,24 @@ import { FacaltyModel } from '../../model/faculty';
 })
 export class DepsaveComponent {
   department: DepartmentModel = new DepartmentModel();
-  formGroup!: FormGroup;
-  // departmentsData: any;
-  faculty: FacaltyModel[]=[];
+  faculties: FacaltyModel[]=[];
 
 
   constructor(
     private departmentService: DepartmentService,
     private facultyService: FacultyService,
-    private formbuilder: FormBuilder,
     private router: Router
 
   ) { }
 
   ngOnInit(): void {
     this.loadFaculties();
-    this.formGroup = this.formbuilder.group({
-      name: [''],
-
-      faculty: [null, '']
-
-    });
   }
 
   loadFaculties() {
     this.facultyService.loadAllfaculties().subscribe({
       next: res => {
-        this.faculty = res;
+        this.faculties = res;
       },
       error: err => {
         console.log(err);
@@ -47,16 +38,12 @@ export class DepsaveComponent {
     })
   }
 
-
-
   createDepartment() {
-    const departmentsData:DepartmentModel=this.formGroup.value;
-    
-    this.departmentService.saveDepartment(departmentsData).subscribe({
+    this.departmentService.saveDepartment(this.department).subscribe({
       next: res => {
         console.log(res);
         this.loadFaculties();
-        this.formGroup.reset();
+        this.department = new DepartmentModel();
         this.router.navigate(['/depview']);
       },
       error: err => {

@@ -18,26 +18,28 @@ public class DepartmentRestController {
     private DepartmentService departmentService;
 
     @GetMapping("view")
-    public ResponseEntity< List<Department>> getAllDepartments() {
-        List<Department>departments= departmentService.getAllDepartments();
+    public ResponseEntity<List<Department>> getAllDepartments() {
+        List<Department> departments = departmentService.getAllDepartments();
         return new ResponseEntity<>(departments, HttpStatus.OK);
 
     }
 
     @PostMapping("save")
-    public ResponseEntity<Department> saveDepartment( @RequestBody Department d) {
+    public ResponseEntity<Department> saveDepartment(@RequestBody Department d) {
         departmentService.saveDepartment(d);
         return new ResponseEntity<>(d, HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteDepartment(@PathVariable("id") int id) {
-     departmentService.deleteDepartmentById(id);
-     return new ResponseEntity<>("deleted", HttpStatus.OK);
+        departmentService.deleteDepartmentById(id);
+        return new ResponseEntity<>("deleted", HttpStatus.OK);
     }
+
     @PutMapping("update/{id}")
-    public ResponseEntity<String> updateDepartment(@PathVariable("id") int id,@RequestBody Department d) {
-        departmentService.updateDepartment(d,id);
+    public ResponseEntity<String> updateDepartment(@PathVariable("id") int id, @RequestBody Department d) {
+        departmentService.updateDepartment(d, id);
         return new ResponseEntity<>("updated", HttpStatus.OK);
     }
+
 }

@@ -1,11 +1,8 @@
+import { FacaltyModel } from "./faculty";
+
 export class DepartmentModel {
 
     id!: number;
     name!: string;
-    
-    faculty!: {
-        id: number;
-        name: string;
-        totalSeat: number;
-    }
+    faculty: FacaltyModel = new FacaltyModel();
 }

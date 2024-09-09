@@ -11,15 +11,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(unique = true, nullable = false)
     private int id;
+
     @Column(length = 50, nullable = false)
     private String name;
 
     @JoinColumn(name = "facId")
-    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Faculty faculty;
+
 }
