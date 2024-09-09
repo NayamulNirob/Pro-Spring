@@ -1,3 +1,5 @@
+import { DepartmentModel } from "./departmodel";
+import { FacaltyModel } from "./faculty";
 
 export class StudentModel{
 
@@ -7,6 +9,7 @@ export class StudentModel{
     gender!:string;
     birthday!:Date;
 
-    // department:DepartmentModel=new DepartmentModel();
+    department:DepartmentModel=new DepartmentModel();
+    faculty:FacaltyModel =new FacaltyModel();
     
 }

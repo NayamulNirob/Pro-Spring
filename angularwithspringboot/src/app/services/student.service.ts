@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StudentModel } from '../model/studentmodel';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,4 +21,10 @@ export class StudentService {
   savestudent(student:StudentModel):Observable<StudentModel>{
     return this.http.post<StudentModel>(this.baseUrl+"save",student);
   }
+
+  
 }
+
+
+
+  
