@@ -53,19 +53,6 @@ export class StudentcreateComponent implements OnInit{
     });
   }
 
-  // createStudent(event: Event) {  
-  //   event.preventDefault(); // Prevents default form submission  
-  //   this.studentService.savestudent(this.students).subscribe({  
-  //     next: res => {  
-  //       console.log(res);  
-  //       this.students = new StudentModel(); // Reset after success  
-  //       this.router.navigate(['/studentview']);  
-  //     },  
-  //     error: err => {  
-  //       console.log("Student not created");  
-  //       console.log(err);  
-  //     }  
-  //   });  
-  // }
+
 
 }
