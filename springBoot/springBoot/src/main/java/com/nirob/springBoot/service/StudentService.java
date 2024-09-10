@@ -15,11 +15,13 @@ import java.util.List;
 @Service
 public class StudentService {
 
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
+    private final StudentRepository studentRepository;
+    private final DepartmentRepository departmentRepository;
 
+    public StudentService(StudentRepository studentRepository, DepartmentRepository departmentRepository) {
+        this.studentRepository = studentRepository;
+        this.departmentRepository = departmentRepository;
+    }
 
 
     public void saveStu(Student s) {
