@@ -34,8 +34,8 @@
         </div>  
 
         <div class="mb-3">  
-            <label for="department" class="form-label">Departments</label>  
-            <select id="department" name="department" class="form-select" required [(ngModel)]="students.department.id">  
+            <label for="department" class="form-label" >Departments</label >  
+            <select id="department" name="department" class="form-select" required [(ngModel)]="students.department.id">
                 <option *ngFor="let dept of departments" [value]="dept.id">{{dept.name}}</option>  
             </select>  
             <div class="invalid-feedback">Please select a department</div>  
