@@ -1,7 +1,6 @@
 package com.nirob.springBoot.controller;
 
 import com.nirob.springBoot.entity.Department;
-import com.nirob.springBoot.entity.Faculty;
 import com.nirob.springBoot.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import java.util.List;
 @RequestMapping("api/dep/")
 @CrossOrigin("*")
 public class DepartmentRestController {
+
     @Autowired
     private DepartmentService departmentService;
 

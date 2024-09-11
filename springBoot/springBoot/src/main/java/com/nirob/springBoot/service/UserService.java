@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,6 +18,7 @@ import java.util.*;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
 
     private final EmailService emailService;
@@ -30,6 +32,7 @@ public class UserService {
         this.userRepository = userRepository;
         this.emailService = emailService;
     }
+
     @Transactional
     public void saveUser(User user, MultipartFile imageFile) throws IOException, MessagingException {
 
@@ -49,14 +52,18 @@ public class UserService {
     }
 
     private String saveImage(MultipartFile file) throws IOException {
-        Path uploadPath= Paths.get(uploadDir);
-        if(!Files.exists(uploadPath)) {
-            Files.createDirectory(uploadPath);
+        Path uploadPath = Paths.get(uploadDir + "/user");
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
         }
-        String fileName = UUID.randomUUID() +"_"+file.getOriginalFilename();
+
+        String fileName = UUID.randomUUID() +"_"+file.getOriginalFilename().toString();
         Path filePath = uploadPath.resolve(fileName);
+
+        // Save the file
         Files.copy(file.getInputStream(), filePath);
-        return fileName;
+
+        return fileName; // Return the filename for storing in the database
     }
 
 

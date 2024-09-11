@@ -28,7 +28,7 @@ public class UserRestController {
             return new ResponseEntity<>("User Added successfully With image", HttpStatus.OK);
         }
         catch (MessagingException | IOException e) {
-            return new ResponseEntity<>("Failed to add user", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to add user "+e, HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
     }
