@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/user/")
+@CrossOrigin("*")
 public class UserRestController {
 
     @Autowired
@@ -34,7 +35,7 @@ public class UserRestController {
 
     @GetMapping("view")
     public ResponseEntity<List<User>> getAllUser() {
-        List<User> users = userService.getAllUser();
+        List<User> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 

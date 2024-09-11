@@ -60,25 +60,22 @@ public class UserService {
     }
 
 
-//    public List<User> findAll() {
-//        return userRepository.findAll();
-//    }
-//
-//    public User findById(int id) {
-//        return userRepository.findById(id).orElseThrow(
-//                () -> new RuntimeException("User with id " + id + " not found")
-//        );
-//    }
-
-//    public void delete(int id) {
-//        userRepository.deleteById(id);
-//    }
-
-//    public void update(User user, int id) {
-//        userRepository.save(user);
-//    }
-
-    public List<User> getAllUser() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    public User findById(int id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("User with id " + id + " not found")
+        );
+    }
+
+    public void delete(int id) {
+        userRepository.deleteById(id);
+    }
+
+    public void update(User user, int id) {
+        userRepository.save(user);
+    }
+
 }
