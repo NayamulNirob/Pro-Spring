@@ -1,0 +1,14 @@
+<div class="row">
+
+    <div class="card md-4 m-1 " style="width: 18rem;" *ngFor="let u of users">
+        <img src="http://localhost:8089/images/{{u.image}}" class="card-img-top" alt="{{u.name}}">
+        <div class="card-body">
+            <h5 class="card-title">Name : {{u.name}}</h5>
+            <p class="card-text">Email : {{u.email}}<br>
+                Password : {{u.password}}<br>
+              </p>
+            <a href="#" class="btn"><button class="btn btn-success btn-sm">Edit</button>&nbsp;
+                <button class="btn btn-danger btn-sm">Delete</button></a>
+        </div>
+    </div>
+</div>

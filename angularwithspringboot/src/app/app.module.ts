@@ -11,6 +11,8 @@ import { DepviewComponent } from './department/depview/depview.component';
 import { DepsaveComponent } from './department/depsave/depsave.component';
 import { StudentcreateComponent } from './student/studentcreate/studentcreate.component';
 import { StudentviewComponent } from './student/studentview/studentview.component';
+import { AdduserComponent } from './user/adduser/adduser.component';
+import { ViewuserComponent } from './user/viewuser/viewuser.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { StudentviewComponent } from './student/studentview/studentview.componen
     DepviewComponent,
     DepsaveComponent,
     StudentcreateComponent,
-    StudentviewComponent
+    StudentviewComponent,
+    AdduserComponent,
+    ViewuserComponent
   ],
   imports: [
     BrowserModule,
