@@ -52,7 +52,7 @@ public class UserService {
     }
 
     private String saveImage(MultipartFile file) throws IOException {
-        Path uploadPath = Paths.get(uploadDir + "/user");
+        Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
