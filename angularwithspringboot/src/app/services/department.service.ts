@@ -8,7 +8,7 @@ import { DepartmentModel } from '../model/departmodel';
 })
 export class DepartmentService {
 
-  baseUrl:string="http://localhost:8089/api/dep/";
+  baseUrl:string="http://localhost:8090/api/dep/";
 
   constructor(private http:HttpClient) { }
 
