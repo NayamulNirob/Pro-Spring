@@ -8,7 +8,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 })
 export class StudentService {
 
-  baseUrl:string="http://localhost:8089/api/student/";
+  baseUrl:string="http://localhost:8090/api/student/";
   
   constructor(private http:HttpClient) { }
 

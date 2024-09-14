@@ -8,7 +8,7 @@ import { FacaltyModel } from '../model/faculty';
 })
 export class FacultyService {
 
-  baseUrl:string="http://localhost:8089/api/faculty/";
+  baseUrl:string="http://localhost:8090/api/faculty/";
 
   constructor(private http:HttpClient) { }
 
