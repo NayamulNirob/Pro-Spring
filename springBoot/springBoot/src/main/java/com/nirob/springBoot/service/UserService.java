@@ -60,10 +60,10 @@ public class UserService {
         String fileName = UUID.randomUUID() +"_"+file.getOriginalFilename().toString();
         Path filePath = uploadPath.resolve(fileName);
 
-        // Save the file
+
         Files.copy(file.getInputStream(), filePath);
 
-        return fileName; // Return the filename for storing in the database
+        return fileName;
     }
 
 
