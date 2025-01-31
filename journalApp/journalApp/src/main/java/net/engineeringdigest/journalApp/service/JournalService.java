@@ -20,7 +20,7 @@ public class JournalService {
       return   journalRepository.save(journalEntry);
     }
 
-    public JournalEntry updateEntry(JournalEntry journalEntry) {
+    public JournalEntry updateEntry(JournalEntry journalEntry,Long id) {
       return  journalRepository.save(journalEntry);
     }
 

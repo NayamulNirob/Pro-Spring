@@ -4,10 +4,7 @@ import net.engineeringdigest.journalApp.dio.JournalEntry;
 import net.engineeringdigest.journalApp.service.JournalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +23,10 @@ public class JournalEntryController {
     @PostMapping("/add")
     public ResponseEntity<JournalEntry> addEntry(@RequestBody JournalEntry journalEntry) {
         return ResponseEntity.ok(journalService.addEntry(journalEntry));
+    }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<JournalEntry>updateEntry(@RequestBody JournalEntry journalEntry, @PathVariable long id ) {
+        return ResponseEntity.ok(journalService.updateEntry(journalEntry,id));
     }
 }
