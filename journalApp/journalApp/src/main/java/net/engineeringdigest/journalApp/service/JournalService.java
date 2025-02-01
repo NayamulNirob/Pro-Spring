@@ -5,6 +5,7 @@ import net.engineeringdigest.journalApp.repository.JournalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,6 +18,7 @@ public class JournalService {
     }
 
     public JournalEntry addEntry(JournalEntry journalEntry) {
+        journalEntry.setDate(LocalDateTime.now());
       return   journalRepository.save(journalEntry);
     }
 
