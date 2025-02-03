@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document(collection = "journal_entries")
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
 public class JournalEntry {
 
@@ -22,4 +20,5 @@ public class JournalEntry {
     private String author;
     private String journal;
     private LocalDateTime date;
+    private LocalDateTime updatedDate;
 }
