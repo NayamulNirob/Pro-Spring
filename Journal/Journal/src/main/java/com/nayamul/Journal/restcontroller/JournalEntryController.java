@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Objects;
+
 
 @RestController
 @RequestMapping("api/journal")
@@ -37,12 +36,6 @@ public class JournalEntryController {
         journalService.deleteJournalById(id);
         return  new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
     }
-
-
-//    @GetMapping("/get/{author}")
-//    public ResponseEntity<List<JournalEntry>> getEntryByAuthor(@PathVariable String author) {
-//        return ResponseEntity.ok(journalService.getAllEntries().stream().filter(e-> Objects.equals(e.getAuthor(),author)).toList());
-//    }
 
 
     @ExceptionHandler(RuntimeException.class)

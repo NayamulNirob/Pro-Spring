@@ -32,6 +32,10 @@ public class UserService {
         );
     }
 
+
+
+
+
     public void deleteUserById(ObjectId id) {
        userRepository.findById(id).orElseThrow(
                ()-> new RuntimeException("NO User Found with this id"+id)
