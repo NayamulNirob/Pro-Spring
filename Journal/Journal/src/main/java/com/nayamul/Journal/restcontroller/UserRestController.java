@@ -29,23 +29,24 @@ public class UserRestController {
     public ResponseEntity<User> addUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.addUser(user));
     }
-    @PutMapping ("/update/{id}")
-    public ResponseEntity<User> updateEntry(@RequestBody User user,@PathVariable ObjectId id) {
-        return ResponseEntity.ok(userService.updateUser(user,user.getId()));
+
+    @PutMapping ("/update/{userName}")
+    public ResponseEntity<User> updateEntry(@RequestBody User user,@PathVariable String userName) {
+        User user1 = userService.findByUsername(userName);
+        if(user1!=null) {
+            user1.setUserName(user.getUserName());
+            user1.setEmail(user.getEmail());
+            user1.setUserPassword(user.getUserPassword());
+            userService.addUser(user1);
+        }
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable ObjectId id) {
         userService.deleteUserById(id);
         return  new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
     }
-//    @GetMapping("/get/{email}")
-//    public ResponseEntity<List<User>> getUserByEmail(@PathVariable String email) {
-//        return ResponseEntity.ok(userService.getAllUsers().stream().filter(e-> Objects.equals(e.getEmail(),email)).toList());
-//    }
-//    @GetMapping("/get/{userName}")
-//    public ResponseEntity<List<User>> getEntryByAuthor(@PathVariable String userName) {
-//        return ResponseEntity.ok(userService.getAllUsers().stream().filter(e-> Objects.equals(e.getUserName(),userName)).toList());
-//    }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleException(RuntimeException e) {

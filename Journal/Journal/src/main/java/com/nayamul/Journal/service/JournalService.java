@@ -25,8 +25,8 @@ public class JournalService {
         return   journalRepository.save(journalEntry);
     }
 
-    public JournalEntry updateEntry(JournalEntry journalEntry,ObjectId id) {
-        if(journalEntry.getUpdatedDate()==null){
+    public JournalEntry updateEntry(JournalEntry journalEntry) {
+        if(journalEntry.getUpdatedDate()==null || journalEntry.getUpdatedDate().isBefore(LocalDateTime.now())){
             journalEntry.setUpdatedDate(LocalDateTime.now());
         }
         return journalRepository.save(journalEntry);

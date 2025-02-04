@@ -28,7 +28,8 @@ public class JournalEntryController {
     }
     @PutMapping ("/update/{id}")
     public ResponseEntity<JournalEntry> updateEntry(@RequestBody JournalEntry journalEntry,@PathVariable ObjectId id) {
-        return ResponseEntity.ok(journalService.updateEntry(journalEntry,journalEntry.getId()));
+        JournalEntry journalEntry1 = journalService.updateEntry(journalEntry);
+        return new  ResponseEntity<>(journalEntry1,HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

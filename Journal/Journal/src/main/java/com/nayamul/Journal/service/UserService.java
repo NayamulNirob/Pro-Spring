@@ -31,10 +31,9 @@ public class UserService {
                 ()-> new RuntimeException("NO User Found with this id")
         );
     }
-
-
-
-
+    public User findByUsername(String userName) {
+        return userRepository.findByUserName(userName);
+    }
 
     public void deleteUserById(ObjectId id) {
        userRepository.findById(id).orElseThrow(
