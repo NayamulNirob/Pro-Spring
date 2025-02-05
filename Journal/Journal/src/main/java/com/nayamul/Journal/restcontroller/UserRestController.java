@@ -1,8 +1,6 @@
 package com.nayamul.Journal.restcontroller;
 
-import com.nayamul.Journal.dio.JournalEntry;
 import com.nayamul.Journal.dio.User;
-import com.nayamul.Journal.service.JournalService;
 import com.nayamul.Journal.service.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("api/user")
@@ -32,7 +29,7 @@ public class UserRestController {
 
     @PutMapping ("/update/{userName}")
     public ResponseEntity<User> updateEntry(@RequestBody User user,@PathVariable String userName) {
-        User user1 = userService.findByUsername(userName);
+        User user1 = userService.findByUserName(userName);
         if(user1!=null) {
             user1.setUserName(user.getUserName());
             user1.setEmail(user.getEmail());

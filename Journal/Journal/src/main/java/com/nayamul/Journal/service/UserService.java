@@ -31,7 +31,7 @@ public class UserService {
                 ()-> new RuntimeException("NO User Found with this id")
         );
     }
-    public User findByUsername(String userName) {
+    public User findByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
 
