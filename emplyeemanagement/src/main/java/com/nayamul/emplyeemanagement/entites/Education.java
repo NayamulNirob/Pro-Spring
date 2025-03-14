@@ -22,7 +22,7 @@ public class Education {
     private String educationDescription;
     private String passingYear;
 
-    @OneToMany(mappedBy = "education", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "education", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Employee> employee = new ArrayList<>();
 }

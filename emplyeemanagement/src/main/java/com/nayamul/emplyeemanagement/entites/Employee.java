@@ -1,10 +1,12 @@
 package com.nayamul.emplyeemanagement.entites;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
 
 
 @Entity
@@ -23,7 +25,8 @@ public class Employee {
     private String phone;
     private String address;
 
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "education_id")
     private Education education;
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -15,15 +16,13 @@ public class EmployeeService {
     EmployeeRepository employeeRepository;
 
 
-
     public List<Employee> getAllEmployee(){
         return employeeRepository.findAll();
     }
 
 
-    public Employee saveEmployee(Employee Employee) {
-
-        return employeeRepository.save(Employee);
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepository.save(employee);
     }
 
 
@@ -40,8 +39,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployeeById(Long id) {
-
-        Employee country = employeeRepository.findById(id).orElseThrow(
+        employeeRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("No Employee found with id: " + id));
     }
 
