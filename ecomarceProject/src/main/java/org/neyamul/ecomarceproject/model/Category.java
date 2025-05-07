@@ -21,4 +21,5 @@ public class Category {
     @NotBlank
     @Size(min = 5, message = "Category Name cannot be blank & must contain atleast 5 characters")
     private String categoryName;
+
 }
