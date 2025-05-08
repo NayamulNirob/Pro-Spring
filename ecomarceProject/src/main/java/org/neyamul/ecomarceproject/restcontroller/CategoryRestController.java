@@ -1,6 +1,7 @@
 package org.neyamul.ecomarceproject.restcontroller;
 
 import jakarta.validation.Valid;
+import org.neyamul.ecomarceproject.config.AppConstants;
 import org.neyamul.ecomarceproject.payload.CategoryDTO;
 import org.neyamul.ecomarceproject.payload.CategoryResponse;
 import org.neyamul.ecomarceproject.services.CategoryService;
@@ -26,10 +27,11 @@ public class CategoryRestController {
     @GetMapping("public/categories")
 //    @RequestMapping(value = "public/categories", method = RequestMethod.GET)
     public ResponseEntity<CategoryResponse> getCategories(
-            @RequestParam(name = "pageNumber") Integer pageNumber,
-            @RequestParam(name = "pageSize") Integer pageSize
-    ) {
-        CategoryResponse categories = categoryService.findAll(pageNumber, pageSize);
+            @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_CATEGORIES_BY, required = false) String sortBy,
+            @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder) {
+        CategoryResponse categories = categoryService.findAll(pageNumber, pageSize, sortBy, sortOrder);
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
