@@ -8,6 +8,9 @@ import org.neyamul.ecomarceproject.payload.CategoryDTO;
 import org.neyamul.ecomarceproject.payload.CategoryResponse;
 import org.neyamul.ecomarceproject.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +25,11 @@ public class CategoryServiceImp implements CategoryService {
     private ModelMapper modelMapper;
 
     @Override
-    public CategoryResponse findAll() {
-        List<Category> categories = categoryRepository.findAll();
+    public CategoryResponse findAll(Integer pageNumber, Integer pageSize) {
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize);
+        Page<Category> categoryPage = categoryRepository.findAll(pageDetails);
+
+        List<Category> categories = categoryPage.getContent();
         if (categories.isEmpty()) {
             throw new ResourceNoTFoundException("Category List is Empty");
         }
@@ -34,6 +40,8 @@ public class CategoryServiceImp implements CategoryService {
 
         return categoryResponse;
     }
+
+
 
 
     @Override
@@ -49,21 +57,24 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public String deleteCateroy(long categoryId) {
-
+    public CategoryDTO deleteCateroy(Long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNoTFoundException("Category", "categoryId", categoryId));
         categoryRepository.delete(category);
-        return "Category With CategoryId: " + categoryId + " deleted Successfully";
+        return modelMapper.map(category, CategoryDTO.class);
 
     }
 
     @Override
-    public Category updateCategory(Category category, long categoryId) {
+    public CategoryDTO updateCategory(CategoryDTO categoryDTO, Long categoryId) {
 
-        Category savedCategory = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNoTFoundException("Category", "categoryId", categoryId));
+        categoryRepository.findById(categoryId)
+                .orElseThrow(
+                        () -> new ResourceNoTFoundException("CategoryDTO", "categoryId", categoryId));
+        Category category = modelMapper.map(categoryDTO, Category.class);
         category.setCategoryId(categoryId);
-        categoryRepository.save(category);
-        return savedCategory;
+
+        Category savedCategory= categoryRepository.save(category);
+        return modelMapper.map(savedCategory, CategoryDTO.class);
 
     }
 

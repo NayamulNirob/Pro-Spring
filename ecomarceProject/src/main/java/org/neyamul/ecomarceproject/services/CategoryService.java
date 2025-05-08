@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface CategoryService {
 
-   CategoryResponse findAll();
+   CategoryResponse findAll(Integer pageNumber, Integer pageSize);
 
     CategoryDTO createCategory(CategoryDTO categoryDTO);
 
-    String deleteCateroy(long categoryId);
+    CategoryDTO deleteCateroy(Long categoryId);
 
 
-    Category updateCategory(Category category, long categoryId);
+    CategoryDTO updateCategory(CategoryDTO categoryDTO, Long categoryId);
 }
