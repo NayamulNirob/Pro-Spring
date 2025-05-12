@@ -17,18 +17,33 @@ public class ProductRestController {
     private ProductService productService;
 
     @PostMapping("admin/category/{categoryId}/product")
-    public ResponseEntity<ProductDTO> addProduct(
-            @RequestBody Product product,
-            @PathVariable Long categoryId
-    ) {
-        ProductDTO productDTO= productService.createProduct(product, categoryId);
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody Product product, @PathVariable Long categoryId) {
+        ProductDTO productDTO = productService.createProduct(product, categoryId);
         return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("public/products")
     public ResponseEntity<ProductResponse> getAllProducts() {
-       ProductResponse productResponse= productService.getAllProducts();
+        ProductResponse productResponse = productService.getAllProducts();
         return new ResponseEntity<>(productResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("public/category/{categoryId}/products")
+    public ResponseEntity<ProductResponse> getProductByCategory(@PathVariable Long categoryId) {
+        ProductResponse productResponse = productService.searchByCategory(categoryId);
+        return new ResponseEntity<>(productResponse, HttpStatus.FOUND);
+    }
+
+    @GetMapping("public/products/search/keyword/{keyword}")
+    public ResponseEntity<ProductResponse> getProductByKeyword(@PathVariable String keyword) {
+        ProductResponse productResponse = productService.findProductNameLikeIgnoreCase(keyword);
+        return new ResponseEntity<>(productResponse, HttpStatus.FOUND);
+    }
+
+    @PutMapping("admin/products/update/{productId}")
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody Product product, @PathVariable Long productId) {
+        ProductDTO productDTO = productService.updateProduct(product, productId);
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
 
 }

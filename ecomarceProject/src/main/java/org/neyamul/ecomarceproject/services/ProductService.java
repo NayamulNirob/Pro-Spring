@@ -9,4 +9,10 @@ public interface ProductService {
     ProductDTO createProduct(Product product, Long categoryId);
 
     ProductResponse getAllProducts();
+
+    ProductResponse searchByCategory(Long categoryId);
+
+    ProductResponse findProductNameLikeIgnoreCase(String keyword);
+
+    ProductDTO updateProduct(Product product, Long productId);
 }
