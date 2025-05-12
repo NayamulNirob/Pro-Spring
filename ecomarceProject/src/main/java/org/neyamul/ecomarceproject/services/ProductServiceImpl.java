@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
         ProductResponse productResponse = new ProductResponse();
-        productResponse.setContent(productDTOS);
+        productResponse.setProductContent(productDTOS);
         return productResponse;
     }
 
@@ -57,18 +57,21 @@ public class ProductServiceImpl implements ProductService {
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
         ProductResponse productResponse = new ProductResponse();
-        productResponse.setContent(productDTOS);
+        productResponse.setProductContent(productDTOS);
         return productResponse;
     }
 
     @Override
     public ProductResponse findProductNameLikeIgnoreCase(String keyword) {
         List<Product> products = productRepository.findByProductNameLikeIgnoreCase('%'+keyword+'%');
+        if (products.isEmpty()) {
+            throw new ResourceNoTFoundException("Product", "productName", keyword);
+        }
         List<ProductDTO> productDTOS = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
         ProductResponse productResponse = new ProductResponse();
-        productResponse.setContent(productDTOS);
+        productResponse.setProductContent(productDTOS);
         return productResponse;
     }
 
@@ -88,5 +91,13 @@ public class ProductServiceImpl implements ProductService {
 
         return modelMapper.map(existingProduct, ProductDTO.class);
 
+    }
+
+    @Override
+    public ProductDTO deleteProduct(Long productId) {
+        Product existingProduct = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNoTFoundException("Product", "productId", productId));
+        productRepository.delete(existingProduct);
+        return modelMapper.map(existingProduct, ProductDTO.class);
     }
 }
