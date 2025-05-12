@@ -1,6 +1,5 @@
 package org.neyamul.ecomarceproject.restcontroller;
 
-import org.neyamul.ecomarceproject.model.Product;
 import org.neyamul.ecomarceproject.payload.ProductDTO;
 import org.neyamul.ecomarceproject.payload.ProductResponse;
 import org.neyamul.ecomarceproject.services.ProductService;
@@ -17,9 +16,9 @@ public class ProductRestController {
     private ProductService productService;
 
     @PostMapping("admin/category/{categoryId}/product")
-    public ResponseEntity<ProductDTO> addProduct(@RequestBody Product product, @PathVariable Long categoryId) {
-        ProductDTO productDTO = productService.createProduct(product, categoryId);
-        return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO, @PathVariable Long categoryId) {
+        ProductDTO savedproductDTO = productService.createProduct(productDTO, categoryId);
+        return new ResponseEntity<>(savedproductDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("public/products")
@@ -41,9 +40,9 @@ public class ProductRestController {
     }
 
     @PutMapping("admin/products/update/{productId}")
-    public ResponseEntity<ProductDTO> updateProduct(@RequestBody Product product, @PathVariable Long productId) {
-        ProductDTO productDTO = productService.updateProduct(product, productId);
-        return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO productDTO, @PathVariable Long productId) {
+        ProductDTO updatedProductDTO = productService.updateProduct(productDTO, productId);
+        return new ResponseEntity<>(updatedProductDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("admin/products/delete/{productId}")

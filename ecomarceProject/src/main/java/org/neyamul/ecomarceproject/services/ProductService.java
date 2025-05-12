@@ -1,12 +1,11 @@
 package org.neyamul.ecomarceproject.services;
 
 
-import org.neyamul.ecomarceproject.model.Product;
 import org.neyamul.ecomarceproject.payload.ProductDTO;
 import org.neyamul.ecomarceproject.payload.ProductResponse;
 
 public interface ProductService {
-    ProductDTO createProduct(Product product, Long categoryId);
+    ProductDTO createProduct(ProductDTO productDTO, Long categoryId);
 
     ProductResponse getAllProducts();
 
@@ -14,7 +13,7 @@ public interface ProductService {
 
     ProductResponse findProductNameLikeIgnoreCase(String keyword);
 
-    ProductDTO updateProduct(Product product, Long productId);
+    ProductDTO updateProduct(ProductDTO productDTO, Long productId);
 
     ProductDTO deleteProduct(Long productId);
 }
