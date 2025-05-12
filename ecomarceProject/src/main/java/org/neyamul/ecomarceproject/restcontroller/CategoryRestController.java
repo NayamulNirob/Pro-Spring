@@ -18,11 +18,6 @@ public class CategoryRestController {
     @Autowired
     private CategoryService categoryService;
 
-//    @GetMapping("echo")
-//    public ResponseEntity<String> echoMessage(@RequestParam(name = "message") String message) {
-//        return new ResponseEntity<>("Echoed Message: " + message, HttpStatus.OK);
-//    }
-
 
     @GetMapping("public/categories")
 //    @RequestMapping(value = "public/categories", method = RequestMethod.GET)
