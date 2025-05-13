@@ -68,17 +68,23 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse getAllProducts(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder, String keyword, String category) {
         Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
-                ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
         Page<Product> productPage= productRepository.findAll(pageDetails);
 
         List<Product> products = productPage.getContent();
+
         List<ProductDTO> productDTOS = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
+
         if(products.isEmpty()){
             throw new APIException(" No Product Exists");
         }
+
         return getProductResponse(productPage, productDTOS);
     }
 
