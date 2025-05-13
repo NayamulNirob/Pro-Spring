@@ -10,8 +10,14 @@ import org.neyamul.ecomarceproject.repository.CategoryRepository;
 import org.neyamul.ecomarceproject.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -101,5 +107,31 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ResourceNoTFoundException("Product", "productId", productId));
         productRepository.delete(existingProduct);
         return modelMapper.map(existingProduct, ProductDTO.class);
+    }
+
+    @Override
+    public ProductDTO updateProductImage(MultipartFile image, Long productId) throws IOException {
+        Product productFromDB = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNoTFoundException("Product", "productId", productId));
+        String path = "src/main/resources/images/";
+        String fileName = uploadImage(path,image);
+        productFromDB.setImage(fileName);
+        Product updatedProduct = productRepository.save(productFromDB);
+        return modelMapper.map(updatedProduct, ProductDTO.class);
+    }
+
+    private String uploadImage(String path, MultipartFile file) throws IOException {
+
+        String originalFilename = file.getOriginalFilename();
+        String randomId = UUID.randomUUID().toString();
+        String fileName = randomId.concat(originalFilename.substring(originalFilename.lastIndexOf(".")));
+        String filePath = path+ File.separator+ fileName;
+
+        File folder = new File(path);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+        Files.copy(file.getInputStream(), Paths.get(filePath));
+        return fileName;
     }
 }
