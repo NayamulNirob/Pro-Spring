@@ -79,6 +79,10 @@ public class ProductServiceImpl implements ProductService {
         if(products.isEmpty()){
             throw new APIException(" No Product Exists");
         }
+        return getProductResponse(productPage, productDTOS);
+    }
+
+    private ProductResponse getProductResponse(Page<Product> productPage, List<ProductDTO> productDTOS) {
         ProductResponse productResponse = new ProductResponse();
         productResponse.setProductContent(productDTOS);
         productResponse.setPageNumber(productPage.getNumber());
@@ -106,14 +110,7 @@ public class ProductServiceImpl implements ProductService {
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
 
-        ProductResponse productResponse = new ProductResponse();
-        productResponse.setProductContent(productDTOS);
-        productResponse.setPageNumber(pageProducts.getNumber());
-        productResponse.setPageSize(pageProducts.getSize());
-        productResponse.setTotalElements(pageProducts.getTotalElements());
-        productResponse.setTotalPages(pageProducts.getTotalPages());
-        productResponse.setLastPage(pageProducts.isLast());
-        return productResponse;
+        return getProductResponse(pageProducts, productDTOS);
     }
 
     @Override
@@ -131,14 +128,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDTO> productDTOS = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
-        ProductResponse productResponse = new ProductResponse();
-        productResponse.setProductContent(productDTOS);
-        productResponse.setPageNumber(pageProducts.getNumber());
-        productResponse.setPageSize(pageProducts.getSize());
-        productResponse.setTotalElements(pageProducts.getTotalElements());
-        productResponse.setTotalPages(pageProducts.getTotalPages());
-        productResponse.setLastPage(pageProducts.isLast());
-        return productResponse;
+        return getProductResponse(pageProducts, productDTOS);
     }
 
     @Override
