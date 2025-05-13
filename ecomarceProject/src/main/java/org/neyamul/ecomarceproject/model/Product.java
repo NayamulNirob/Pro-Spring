@@ -1,6 +1,8 @@
 package org.neyamul.ecomarceproject.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +15,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productId;
+    @NotBlank
+    @Size(min = 4, max = 50,message = "Product Name cannot be blank & must contain atleast 2 characters")
     private String productName;
+    @NotBlank
+    @Size(min = 6, max = 200, message = "Product Description cannot be blank & must contain atleast 6 characters")
     private String description;
     private String image;
     private Double price;

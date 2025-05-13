@@ -1,6 +1,8 @@
 package org.neyamul.ecomarceproject.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.neyamul.ecomarceproject.exceptions.APIException;
 import org.neyamul.ecomarceproject.exceptions.ResourceNoTFoundException;
 import org.neyamul.ecomarceproject.model.Category;
 import org.neyamul.ecomarceproject.model.Product;
@@ -10,11 +12,16 @@ import org.neyamul.ecomarceproject.repository.CategoryRepository;
 import org.neyamul.ecomarceproject.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
@@ -37,50 +44,100 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO createProduct(ProductDTO productDTO, Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNoTFoundException("Category", "categoryId", categoryId));
+        boolean isProductNotPresent=true;
+        List<Product> products=category.getProducts();
+        for (Product value:products) {
+            if (value.getProductName().equalsIgnoreCase(productDTO.getProductName())) {
+                isProductNotPresent=false;
+                break;
+            }
+        }
+        if (isProductNotPresent) {
+            Product product = modelMapper.map(productDTO, Product.class);
+            product.setCategory(category);
+            product.setSpecialPrice(product.getPrice() - (product.getDiscount() * 0.01) * product.getPrice());
+            product.setImage("default.png");
+            Product savedProduct = productRepository.save(product);
+            return modelMapper.map(savedProduct, ProductDTO.class);
+        }else {
+            throw new APIException("Product Already Present");
+        }
 
-        Product product = modelMapper.map(productDTO, Product.class);
-        product.setCategory(category);
-        product.setSpecialPrice( product.getPrice()-(product.getDiscount()*0.01)*product.getPrice());
-        product.setImage("default.png");
-        Product savedProduct = productRepository.save(product);
-        return modelMapper.map(savedProduct, ProductDTO.class);
     }
 
     @Override
-    public ProductResponse getAllProducts() {
-        List<Product> products = productRepository.findAll();
+    public ProductResponse getAllProducts(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder, String keyword, String category) {
+        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+        Page<Product> productPage= productRepository.findAll(pageDetails);
+
+        List<Product> products = productPage.getContent();
         List<ProductDTO> productDTOS = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
+        if(products.isEmpty()){
+            throw new APIException(" No Product Exists");
+        }
         ProductResponse productResponse = new ProductResponse();
         productResponse.setProductContent(productDTOS);
+        productResponse.setPageNumber(productPage.getNumber());
+        productResponse.setPageSize(productPage.getSize());
+        productResponse.setTotalElements(productPage.getTotalElements());
+        productResponse.setTotalPages(productPage.getTotalPages());
+        productResponse.setLastPage(productPage.isLast());
         return productResponse;
     }
 
     @Override
-    public ProductResponse searchByCategory(Long categoryId) {
+    public ProductResponse searchByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNoTFoundException("Category", "categoryId", categoryId));
-        List<Product> products = productRepository.findByCategoryOrderByPriceAsc(category);
-        List<ProductDTO> productDTOS = products.stream()
-                .map(product -> modelMapper.map(product, ProductDTO.class))
-                .toList();
-        ProductResponse productResponse = new ProductResponse();
-        productResponse.setProductContent(productDTOS);
-        return productResponse;
-    }
+        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+        Page<Product> pageProducts = productRepository.findByCategoryOrderByPriceAsc(category, pageDetails);
 
-    @Override
-    public ProductResponse findProductNameLikeIgnoreCase(String keyword) {
-        List<Product> products = productRepository.findByProductNameLikeIgnoreCase('%'+keyword+'%');
+        List<Product> products = pageProducts.getContent();
         if (products.isEmpty()) {
-            throw new ResourceNoTFoundException("Product", "productName", keyword);
+            throw new APIException(category.getCategoryName()+" Category Has No Product");
         }
         List<ProductDTO> productDTOS = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
+
         ProductResponse productResponse = new ProductResponse();
         productResponse.setProductContent(productDTOS);
+        productResponse.setPageNumber(pageProducts.getNumber());
+        productResponse.setPageSize(pageProducts.getSize());
+        productResponse.setTotalElements(pageProducts.getTotalElements());
+        productResponse.setTotalPages(pageProducts.getTotalPages());
+        productResponse.setLastPage(pageProducts.isLast());
+        return productResponse;
+    }
+
+    @Override
+    public ProductResponse findProductNameLikeIgnoreCase(String keyword, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+        Page<Product> pageProducts = productRepository.findByProductNameLikeIgnoreCase('%'+keyword+'%', pageDetails);
+
+        List<Product> products = pageProducts.getContent();
+        if (products.isEmpty()) {
+            throw new APIException("No Product Found With This Keyword : "+keyword);
+        }
+
+        List<ProductDTO> productDTOS = products.stream()
+                .map(product -> modelMapper.map(product, ProductDTO.class))
+                .toList();
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setProductContent(productDTOS);
+        productResponse.setPageNumber(pageProducts.getNumber());
+        productResponse.setPageSize(pageProducts.getSize());
+        productResponse.setTotalElements(pageProducts.getTotalElements());
+        productResponse.setTotalPages(pageProducts.getTotalPages());
+        productResponse.setLastPage(pageProducts.isLast());
         return productResponse;
     }
 
@@ -90,6 +147,7 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ResourceNoTFoundException("Product", "productId", productId));
 
         Product product = modelMapper.map(productDTO, Product.class);
+
         existingProduct.setProductName(product.getProductName());
         existingProduct.setPrice(product.getPrice());
         existingProduct.setDiscount(product.getDiscount());
