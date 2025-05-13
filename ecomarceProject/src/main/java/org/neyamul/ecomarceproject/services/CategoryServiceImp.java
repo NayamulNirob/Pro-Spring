@@ -26,7 +26,7 @@ public class CategoryServiceImp implements CategoryService {
     private ModelMapper modelMapper;
 
     @Override
-    public CategoryResponse findAll(Integer pageNumber, Integer pageSize,String sortBy,String sortOrder) {
+    public CategoryResponse findAll(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
         Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
         Page<Category> categoryPage = categoryRepository.findAll(pageDetails);
@@ -49,8 +49,6 @@ public class CategoryServiceImp implements CategoryService {
     }
 
 
-
-
     @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         Category category = modelMapper.map(categoryDTO, Category.class);
@@ -58,7 +56,7 @@ public class CategoryServiceImp implements CategoryService {
         if (savedCategory != null) {
             throw new APIException("Category With This Name : '" + category.getCategoryName() + "' Already Exist");
         }
-         Category newCategory= categoryRepository.save(category);
+        Category newCategory = categoryRepository.save(category);
         return modelMapper.map(newCategory, CategoryDTO.class);
 
     }
@@ -80,7 +78,7 @@ public class CategoryServiceImp implements CategoryService {
         Category category = modelMapper.map(categoryDTO, Category.class);
         category.setCategoryId(categoryId);
 
-        Category savedCategory= categoryRepository.save(category);
+        Category savedCategory = categoryRepository.save(category);
         return modelMapper.map(savedCategory, CategoryDTO.class);
 
     }
