@@ -1,4 +1,4 @@
-package org.neyamul.ecomarceproject.security.jwt;
+package org.neyamul.ecomarceproject.security.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
