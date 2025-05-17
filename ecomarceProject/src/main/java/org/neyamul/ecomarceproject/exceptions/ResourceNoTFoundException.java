@@ -5,10 +5,7 @@ public class ResourceNoTFoundException extends RuntimeException {
     String recourseName;
     String field;
     String fieldName;
-    long fielId;
-
-    public ResourceNoTFoundException(){
-    }
+    long fieldId;
 
 
     public ResourceNoTFoundException(String recourseName){
@@ -23,11 +20,11 @@ public class ResourceNoTFoundException extends RuntimeException {
         this.fieldName = fieldName;
     }
 
-    public ResourceNoTFoundException(String recourseName, String field, long fielId) {
-        super(String.format("%s not found with %s: %d ", recourseName, field, fielId));
+    public ResourceNoTFoundException(String recourseName, String field, long fieldId) {
+        super(String.format("%s not found with %s: %d ", recourseName, field, fieldId));
         this.recourseName = recourseName;
         this.field = field;
-        this.fielId = fielId;
+        this.fieldId = fieldId;
     }
 
 }

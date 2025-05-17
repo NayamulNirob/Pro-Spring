@@ -1,7 +1,5 @@
 package org.neyamul.ecomarceproject.model;
 
-import jakarta.persistence.Enumerated;
-
 
 public enum AppRole {
 

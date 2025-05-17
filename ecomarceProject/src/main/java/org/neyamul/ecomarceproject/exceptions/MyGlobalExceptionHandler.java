@@ -13,7 +13,7 @@ import java.util.Map;
 
 
 @RestControllerAdvice
-public class MyGlobalExaceptionHandler {
+public class MyGlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> myMethodArgumentNotValidException(MethodArgumentNotValidException e) {
@@ -28,13 +28,13 @@ public class MyGlobalExaceptionHandler {
     }
 
     @ExceptionHandler(ResourceNoTFoundException.class)
-    public ResponseEntity<APIResponse> recorseNotFoundException(ResourceNoTFoundException e) {
+    public ResponseEntity<APIResponse> recurseNotFoundException(ResourceNoTFoundException e) {
         APIResponse apiResponse = new APIResponse(e.getMessage(), false);
         return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(APIException.class)
-    public ResponseEntity<APIResponse> myAPIExcption(APIException e) {
+    public ResponseEntity<APIResponse> myAPIException(APIException e) {
         APIResponse apiResponse  = new APIResponse(e.getMessage(), false);
         return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }

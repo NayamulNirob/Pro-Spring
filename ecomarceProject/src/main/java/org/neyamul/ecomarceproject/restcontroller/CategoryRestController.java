@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/")
 public class CategoryRestController {
 
-
     @Autowired
-    private CategoryService categoryService;
+    private  CategoryService categoryService;
 
 
     @GetMapping("public/categories")
@@ -37,7 +36,7 @@ public class CategoryRestController {
     }
 
     @DeleteMapping("categories/admin/delete/{categoryId}")
-    public ResponseEntity<CategoryDTO> deleteCetegory(@PathVariable Long categoryId) {
+    public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable Long categoryId) {
         CategoryDTO categoryDTO = categoryService.deleteCateroy(categoryId);
         return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
     }
