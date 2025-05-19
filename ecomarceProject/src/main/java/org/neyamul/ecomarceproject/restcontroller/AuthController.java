@@ -1,7 +1,15 @@
 package org.neyamul.ecomarceproject.restcontroller;
 
+import jakarta.validation.Valid;
+import org.neyamul.ecomarceproject.model.AppRole;
+import org.neyamul.ecomarceproject.model.Role;
+import org.neyamul.ecomarceproject.model.User;
+import org.neyamul.ecomarceproject.repository.RoleRepository;
+import org.neyamul.ecomarceproject.repository.UserRepository;
 import org.neyamul.ecomarceproject.security.jwt.JwtUtils;
 import org.neyamul.ecomarceproject.security.request.LoginRequest;
+import org.neyamul.ecomarceproject.security.request.SignupRequest;
+import org.neyamul.ecomarceproject.security.response.MessageResponse;
 import org.neyamul.ecomarceproject.security.response.UserInfoResponse;
 import org.neyamul.ecomarceproject.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +21,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/auth/")
+@RequestMapping("/api/auth/")
 public class AuthController {
 
     @Autowired
@@ -31,6 +39,15 @@ public class AuthController {
 
     @Autowired
     private  AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     @PostMapping("signing")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
@@ -58,5 +75,56 @@ public class AuthController {
         UserInfoResponse response = new UserInfoResponse(userDetails.getId(),userDetails.getUsername(), roles, jwtToken);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        if (userRepository.existsByUserName(signUpRequest.getUsername())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+        }
+
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+        }
+
+        // Create a new user's account
+        User user = new User(signUpRequest.getUsername(),
+                signUpRequest.getEmail(),
+                encoder.encode(signUpRequest.getPassword()));
+
+        Set<String> strRoles = signUpRequest.getRole();
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles == null) {
+            Role userRole = roleRepository.findByRoleName(AppRole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+
+                        break;
+                    case "seller":
+                        Role modRole = roleRepository.findByRoleName(AppRole.ROLE_SELLER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(modRole);
+
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByRoleName(AppRole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
+
+        user.setRoles(roles);
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 }

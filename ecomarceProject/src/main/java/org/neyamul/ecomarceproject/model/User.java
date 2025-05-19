@@ -18,9 +18,16 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "email")
+                @UniqueConstraint(columnNames = "email"),
+                @UniqueConstraint(columnNames = "userName")
         })
 public class User {
+
+    public User(String userName, String email, String password) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,10 +45,9 @@ public class User {
 
 
     @NotBlank
-    @Size(min = 5, max = 120,message = "Password must be between 5 to 20 characters")
-//  @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{5,20}$", message = "Password must contain at least one uppercase letter, one lowercase letter, and one digit")
-    @Pattern(regexp = "^(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{5,20}$",
-            message = "Password must be 5-120 characters long and include at least one special character (!@#$%^&*).")
+    @Size(min = 5, max = 120,message = "Password must be between 5 to 120 characters")
+//    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{5,120}$",
+//           message = "Password must be 5-120 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character (!@#$%^&*).")
     @Column(nullable = false)
     private String password;
 
@@ -67,6 +73,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "addressId", referencedColumnName = "addressId"))
     @JsonManagedReference
     private List<Address> addresses;
+
 
 
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "roleId")
-    private Integer roleId;
+    private Long roleId;
 
     @Column(name = "roleName")
     @Enumerated(EnumType.STRING)
@@ -31,4 +32,23 @@ public class Role {
     @ToString.Exclude
     @JsonBackReference
     private Set<User> users =new HashSet<>();
+
+    public Role(AppRole roleName) {
+    this.roleName = roleName;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roleId, roleName); // Use only fields, not collections
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return Objects.equals(roleId, role.roleId) &&
+                roleName == role.roleName;
+    }
+
 }
