@@ -90,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductResponse getProductResponse(Page<Product> productPage, List<ProductDTO> productDTOS) {
         ProductResponse productResponse = new ProductResponse();
-        productResponse.setProductContent(productDTOS);
+        productResponse.setContent(productDTOS);
         productResponse.setPageNumber(productPage.getNumber());
         productResponse.setPageSize(productPage.getSize());
         productResponse.setTotalElements(productPage.getTotalElements());
