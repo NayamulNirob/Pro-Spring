@@ -20,6 +20,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productId;
+
     @NotBlank
     @Size(min = 4, max = 50,message = "Product Name cannot be blank & must contain at least 2 characters")
     private String productName;
