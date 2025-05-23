@@ -3,10 +3,13 @@ package org.neyamul.ecomarceproject.services;
 import org.modelmapper.ModelMapper;
 import org.neyamul.ecomarceproject.exceptions.APIException;
 import org.neyamul.ecomarceproject.exceptions.ResourceNoTFoundException;
+import org.neyamul.ecomarceproject.model.Cart;
 import org.neyamul.ecomarceproject.model.Category;
 import org.neyamul.ecomarceproject.model.Product;
+import org.neyamul.ecomarceproject.payload.CartDTO;
 import org.neyamul.ecomarceproject.payload.ProductDTO;
 import org.neyamul.ecomarceproject.payload.ProductResponse;
+import org.neyamul.ecomarceproject.repository.CartRepository;
 import org.neyamul.ecomarceproject.repository.CategoryRepository;
 import org.neyamul.ecomarceproject.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +22,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+    @Autowired
+    private CartRepository cartRepository;
+
+    @Autowired
+    private CartService cartService;
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -157,9 +167,25 @@ public class ProductServiceImpl implements ProductService {
         existingProduct.setDescription(product.getDescription());
         existingProduct.setQuantity(product.getQuantity());
 
-        productRepository.save(existingProduct);
+       Product savedProduct = productRepository.save(existingProduct);
 
-        return modelMapper.map(existingProduct, ProductDTO.class);
+        List<Cart> carts = cartRepository.findCartsByProductId(productId);
+
+        List<CartDTO> cartDTOs = carts.stream().map(cart -> {
+            CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+
+            List<ProductDTO> products = cart.getCartItems().stream()
+                    .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+
+            cartDTO.setProducts(products);
+
+            return cartDTO;
+
+        }).toList();
+
+        cartDTOs.forEach(cart -> cartService.updateProductInCarts(cart.getCartId(), productId));
+
+        return modelMapper.map(savedProduct, ProductDTO.class);
 
     }
 
