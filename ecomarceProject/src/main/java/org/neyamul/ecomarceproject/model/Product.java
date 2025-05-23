@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -48,12 +49,7 @@ public class Product {
     @JoinColumn(name = "seller_id")
     private User user;
 
-    @ToString.Exclude
-    @OneToOne(mappedBy = "product", cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},
-            orphanRemoval = true)
-    private Cart cart;
-
-
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private List<CartItems> products;
+    private List<CartItems> products = new ArrayList<>();
+
 }

@@ -19,7 +19,7 @@ public class CartItemsDTO {
 
     private CartDTO cart;
 
-    private ProductDTO product;
+    private ProductDTO productDTO;
 
 
 }

@@ -38,6 +38,7 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public CartDTO addProductToCart(Long productId, Integer quantity) {
+
         Cart cart=createCart();
 
         Product product= productRepository.findById(productId).orElseThrow(
@@ -51,7 +52,7 @@ public class CartServiceImpl implements CartService{
         if(product.getQuantity()==0){
             throw new APIException(product.getProductName()+"Is not Available");
         }
-        if (product.getQuantity()<= quantity){
+        if (product.getQuantity()< quantity){
             throw new APIException("Please make an order of the"
                     +product.getProductName()
                     +"Less then or Equal of quantity"
@@ -66,20 +67,27 @@ public class CartServiceImpl implements CartService{
 
         cartItemsRepository.save(newCartItems);
 
+//        product.setQuantity(product.getQuantity()-quantity);
+
         product.setQuantity(product.getQuantity());
+
         cart.setTotalPrice(cart.getTotalPrice()+(product.getSpecialPrice()*quantity));
+
         cartRepository.save(cart);
 
         CartDTO cartDTO=modelMapper.map(cart,CartDTO.class);
 
         List<CartItems> cartItem=cart.getCartItems();
 
-        Stream <ProductDTO> productDTOStream=cartItem.stream().map(
-                item->{
-                    ProductDTO map= modelMapper.map(item.getProduct(),ProductDTO.class);
-                    map.setQuantity(item.getQuantity());
-                    return map;
-                });
+
+
+     Stream<ProductDTO> productDTOStream = cartItem.stream().map(
+         item -> {
+             ProductDTO map = modelMapper.map(item.getProduct(), ProductDTO.class);
+             map.setQuantity(item.getQuantity());
+             return map;
+         }
+     );
 
         cartDTO.setProducts(productDTOStream.toList());
 
@@ -94,7 +102,8 @@ public class CartServiceImpl implements CartService{
         Cart cart=new Cart();
         cart.setTotalPrice(0.00);
         cart.setUser(authUtil.loggedInUser());
-        Cart newCart= cartRepository.save(cart);
-        return newCart;
+        return cartRepository.save(cart);
     }
+
+
 }

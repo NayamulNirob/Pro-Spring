@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,19 +19,13 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
 
-    private Double totalPrice;
+    private Double totalPrice=0.0;
 
     @OneToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
-    @JoinColumn(name = "productId")
-    private Product product;
-
-    @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    private List<CartItems> cartItems;
-
-
+    @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<CartItems> cartItems=new ArrayList<>();
 
 }
