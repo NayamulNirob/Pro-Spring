@@ -193,6 +193,11 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO deleteProduct(Long productId) {
         Product existingProduct = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNoTFoundException("Product", "productId", productId));
+
+        // DELETE
+        List<Cart> carts = cartRepository.findCartsByProductId(productId);
+        carts.forEach(cart -> cartService.deleteProductFromCart(cart.getCartId(), productId));
+
         productRepository.delete(existingProduct);
         return modelMapper.map(existingProduct, ProductDTO.class);
     }
