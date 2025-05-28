@@ -1,15 +1,11 @@
 package org.neyamul.ecomarceproject.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import java.util.List;
 
 @Entity
 @Data
@@ -44,7 +40,7 @@ public class Address {
     private String state;
 
     @NotBlank
-    @Size(min = 4 ,message = "Postal code should atLeast  4 characters")
+    @Size(min = 3 ,message = "Postal code should atLeast  3 characters")
     @Column(name = "postal_code")
     private String postalCode;
 
@@ -54,10 +50,9 @@ public class Address {
     private String country;
 
 
-    @ManyToMany(mappedBy = "addresses")
-    @ToString.Exclude
-    @JsonBackReference
-    private List<User> user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
 }

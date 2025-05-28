@@ -67,11 +67,10 @@ public class User {
     private Set<Product> product;
 
     @ToString.Exclude
-    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-    @JoinTable(name = "user_address",
-            joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "addressId", referencedColumnName = "addressId"))
-    @JsonManagedReference
+    @OneToMany(mappedBy = "user",cascade = {CascadeType.MERGE,CascadeType.PERSIST},orphanRemoval = true)
+//    @JoinTable(name = "user_address",
+//            joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"),
+//            inverseJoinColumns = @JoinColumn(name = "addressId", referencedColumnName = "addressId"))
     private List<Address> addresses;
 
 
