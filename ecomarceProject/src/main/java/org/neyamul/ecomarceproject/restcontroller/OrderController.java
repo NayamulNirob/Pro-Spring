@@ -1,5 +1,6 @@
 package org.neyamul.ecomarceproject.restcontroller;
 
+import jakarta.validation.Valid;
 import org.neyamul.ecomarceproject.payload.OrderDTO;
 import org.neyamul.ecomarceproject.payload.OrderRequestDTO;
 import org.neyamul.ecomarceproject.services.OrderService;
@@ -21,7 +22,7 @@ public class OrderController {
 
 
     @PostMapping("/orders/users/payments/{paymentMethod}")
-    public ResponseEntity<OrderDTO>orderProducts(@PathVariable String paymentMethod, @RequestBody OrderRequestDTO orderRequestDTO){
+    public ResponseEntity<OrderDTO>orderProducts(@Valid @PathVariable String paymentMethod, @RequestBody OrderRequestDTO orderRequestDTO){
         String emailId=authUtil.loggedInEmail();
         OrderDTO orderDTO= orderService.placeOrder(
                 emailId,
