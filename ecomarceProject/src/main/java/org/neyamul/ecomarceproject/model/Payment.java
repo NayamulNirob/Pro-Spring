@@ -31,6 +31,11 @@ public class Payment {
     private String paymentMethod; // e.g., "Credit Card", "PayPal", etc.
 
 
-
-
+    public Payment(String paymentMethod, String pgPaymentId, String pgName, String pgStatus, String pgResponseMessage) {
+        this.paymentMethod = paymentMethod;
+        this.pgPaymentId = pgPaymentId;
+        this.pgName = pgName;
+        this.pgStatus = pgStatus;
+        this.pgResponseMessage = pgResponseMessage;
+    }
 }
