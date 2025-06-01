@@ -39,6 +39,9 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
 
     @Override
     @Transactional
@@ -91,6 +94,8 @@ public class OrderServiceImpl implements OrderService{
             Product product = item.getProduct();
 
             product.setQuantity(product.getQuantity() - quantity);
+
+            productRepository.save(product);
 
             cartService.deleteProductFromCart(cart.getCartId(), item.getProduct().getProductId());
         });
