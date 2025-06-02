@@ -68,6 +68,7 @@ public class OrderServiceImpl implements OrderService{
                 pgName, pgStatus, pgResponseMessage);
         payment.setOrder(order);
         paymentRepository.save(payment);
+        order.setPayment(payment);
 
         Order savedOrder = orderRepository.save(order);
 
@@ -101,6 +102,14 @@ public class OrderServiceImpl implements OrderService{
         });
 
         OrderDTO orderDTO = modelMapper.map(savedOrder, OrderDTO.class);
+
+        // Before adding items to orderDTO.getOrderItems()
+        if (orderDTO.getOrderItems() == null) {
+            orderDTO.setOrderItems(new ArrayList<>());
+        }
+        // Now it's safe to add items
+       // orderDTO.getOrderItems().add(new OrderItemDTO());
+
         orderItems.forEach(item->orderDTO.getOrderItems().add(modelMapper.map(item, OrderItemDTO.class)));
 
         orderDTO.setAddressId(addressId);
